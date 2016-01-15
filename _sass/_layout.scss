@@ -10,10 +10,7 @@
     position: relative;
 }
 
-.site-title {
-    display:block;
-    width:50px;
-    height:50px;
+.site-title {    
     text-align:center;
 
     &,
@@ -22,7 +19,13 @@
     }
 }
 .site-avatar {
-    max-width:100%;
+    width:50px;
+    height:50px;
+    border-radius:100%; 
+}
+.site-user-info {
+    color:$grey-color;
+    font-size:.75
 }
 .site-nav {  
     line-height: 56px;
