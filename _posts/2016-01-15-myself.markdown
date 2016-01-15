@@ -1,0 +1,7 @@
+---
+layout: post
+title: "我也来操作下"
+date: 2016-01-15 11:18:48 
+categories: jekyll update
+---
+post的模板在 `_layouts` 目录下，`_posts`目录下是具体文章详情
