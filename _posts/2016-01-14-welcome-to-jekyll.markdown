@@ -18,7 +18,7 @@ print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
 {% endhighlight %}
 
-> This is just a example.
+>## This is just a example.
 {% highlight ruby %}
 console.log("hello world!");
 {% endhighlight %}

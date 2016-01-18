@@ -5,3 +5,24 @@ date: 2016-01-15 11:18:48
 categories: jekyll update
 ---
 post的模板在 `_layouts` 目录下，`_posts`目录下是具体文章详情
+
+
+
+1.  Bird
+1.  McHale
+1.  Parish
+
+无序列表
+
++   Red
++   Green
++   Blue
+
+_single underscores_
+
+**double asterisks**
+
+！[Alt text](/path/to/img.jpg)
+
+<http://example.com/>
+
