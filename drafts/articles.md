@@ -1,7 +1,7 @@
 ---
-layout: page
+layout: default
 title: 笔记
-permalink: /articles/
+permalink: 
 ---
 
 文章列表

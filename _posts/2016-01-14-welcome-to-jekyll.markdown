@@ -2,7 +2,7 @@
 layout: post
 title:  "Welcome to Jekyll!"
 date:   2016-01-14 17:27:09 +0800
-categories: jekyll update
+categories: articles
 ---
 You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
@@ -18,7 +18,7 @@ print_hi('Tom')
 #=> prints 'Hi, Tom' to STDOUT.
 {% endhighlight %}
 
->## This is just a example.
+>#### This is just a example.
 {% highlight ruby %}
 console.log("hello world!");
 {% endhighlight %}
