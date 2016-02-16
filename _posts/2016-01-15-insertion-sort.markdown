@@ -42,3 +42,22 @@ function insertSort(arr) {
     return arr;
 }
 {% endhighlight %}
+
+2小节 2.1-4 “A、B各存放了一个二进制n位整数的各位数值，现在通过二进制的加法对这两个数进行计算，结果以二进制的形式把各位上的数值存放在数组c中”
+
+{% highlight javascript %}
+function binaryAdd(a,b,c) {
+    var flag=0,j,key,n=a.length=b.length;
+    for(j=0;j<n;j++) {
+        key=a[j]+b[j]+flag;
+        c[j]=key % 2;
+        if(key>1) { flag=1;}
+    }
+    if(flag===1) { c[n]=1;}
+    return arrc;
+}
+{% endhighlight %}
+
+>### (注意把二进制各个位置上的数值以倒序方式存放在数组中)
+var arra=[1,1,1], arrb=[0,1,1], arrrc=[]; binaryAdd(arra, arrb, arrc)   ----[1, 0, 1, 1]
+
