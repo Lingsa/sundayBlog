@@ -22,10 +22,9 @@ function insertSort(arr) {
     }
     return arr;
 }
-
-
+#=> 测试示例 insertSort([2,1,3])   输出结果是 [3,2,1].
 {% endhighlight %}
->##### 测试示例 insertSort([2,1,3])   输出结果是 [3,2,1]
+
 用JavaScript 实现 INSERTION-SORT降序排序
 
 {% highlight javascript %}
