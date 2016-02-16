@@ -58,6 +58,6 @@ function binaryAdd(a,b,c) {
 }
 {% endhighlight %}
 
->### (注意把二进制各个位置上的数值以倒序方式存放在数组中)
+>#### (注意把二进制各个位置上的数值以倒序方式存放在数组中)
 var arra=[1,1,1], arrb=[0,1,1], arrrc=[]; binaryAdd(arra, arrb, arrc)   ----[1, 0, 1, 1]
 
