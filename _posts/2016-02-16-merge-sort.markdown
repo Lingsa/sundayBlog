@@ -39,5 +39,5 @@ function mergeSort(arr, p, r) {
 
 {% endhighlight %}
 
-测试地址：<a href="https://jsfiddle.net/37mgo212/" target="_blank">https://jsfiddle.net/37mgo212/</a>
+贴 可调试地址：<a href="https://jsfiddle.net/37mgo212/" target="_blank">https://jsfiddle.net/37mgo212/</a>
 
