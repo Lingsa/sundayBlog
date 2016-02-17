@@ -36,9 +36,7 @@ function mergeSort(arr, p, r) {
         }
     }
 }
-#=> var testArr=[2, 4, 5, 7, 1, 2, 3, 6]; mergeSort(testArr,0, 8); testArr;
-   ---输出结果 [1, 2, 2, 3, 4, 5, 6, 7]
-测试地址：https://jsfiddle.net/37mgo212/ [https://jsfiddle.net/37mgo212/]
+
 {% endhighlight %}
 
 测试地址：https://jsfiddle.net/37mgo212/ [https://jsfiddle.net/37mgo212/]
