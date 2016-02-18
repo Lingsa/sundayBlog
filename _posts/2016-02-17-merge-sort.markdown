@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "《算法导论》第二章---合并排序"
-date: 2016-02-16  
+date: 2016-02-17  
 info: 用JavaScript 实现 合并排序（分治法）
 categories: articles
 ---

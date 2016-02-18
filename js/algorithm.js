@@ -16,7 +16,7 @@ function binarySearch(arr, v, p, r) {
     }    
 }
 
-//2.3-7
+//2.3-7 （page.37）输入有n个整数构成的集合S和一个整数x，判断出S中是否存在有两个数其和等于x的元素。
 function checkSums(arr, x) {
     arr=arr.sort();
     var n=arr.length, i, temArr;
@@ -28,3 +28,21 @@ function checkSums(arr, x) {
     }
     return false;
 }
+
+//插入排序 （降序）
+function insertSort(arr) {
+    var key,i,j;
+    for(j=1;j<arr.length;j++) {
+        key=arr[j];
+        i=j-1;
+        while(i>=0 && arr[i]> key) {
+            arr[i+1]=arr[i];
+            i--;
+        }
+        arr[i+1]=key;
+    }
+    return arr;
+}
+
+
+//
