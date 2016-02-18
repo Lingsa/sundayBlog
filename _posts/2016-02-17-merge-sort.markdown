@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "《算法导论》第二章---合并排序"
-date: 2016-02-17  
+date: 2016-02-17 13:34:55 
 info: 用JavaScript 实现 合并排序（分治法）
 categories: articles
 ---
@@ -46,7 +46,7 @@ function mergeSort(arr, p, r) {
 2小节 练习2.3-2
 描述：改写MERGE过程，使之不在使用哨兵元素，而是一旦数组`L`或`R`中的所有元素都被复制回数组`A`后，就立即停止，再将另一个数组中余下的元素复制回到数组`A`中。
 
-{% highlight  %}
+{% highlight javascript %}
 function merge(arr, p, q, r) {
     var i, j, k, temArr;
     var arrL=arr.slice(p, q), arrR=arr.slice(q, r);
