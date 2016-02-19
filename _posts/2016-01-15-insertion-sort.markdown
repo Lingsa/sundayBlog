@@ -6,6 +6,8 @@ info: 用JavaScript 实现 INSERTION-SORT升序(或降序)排序
 categories: articles
 ---
 
+插入排序用到外、内两个循环。外循环从数组的第2位到最后一位挨个移动，内循环则对外循环选中的元素与它的数组元素一一比较，如果外循环选中的元素比内循环选中的元素小，那么内循环数组元素会向右移动，为外循环选中的这个元素腾位。
+
 用JavaScript 实现 INSERTION-SORT升序排序
 
 {% highlight javascript %}

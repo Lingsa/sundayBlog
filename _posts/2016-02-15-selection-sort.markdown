@@ -45,7 +45,7 @@ function selectSortT(arr) {
     for(i=0;i<arr.length-1;i++) {        
         temArr=arr.slice(i);
         min=arr.indexOf(Math.min.apply(null,temArr ));
-        swap(arr, i,min)
+        swap(arr, i,min);
     }
     return arr;
 }
