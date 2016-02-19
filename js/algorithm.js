@@ -196,4 +196,51 @@ console.log("动态间隔序列的希尔排序消耗时间为："+(time2-time1)+
 /*结果显示 两者的消耗时间几乎等同 shellSort1略胜shellSort*/
 
 //合并（归并）排序
+//《数据结构与算法 javascript描述》非递归式
+function mergeSort(arr) {
+    if(arr.length<2) {
+        return;
+    }
+    var step=1;
+    var left,right;
+    while(step<arr.length) {
+        left=0;
+        right=step;
+        while(right+step<=arr.length) {
+            mergeArrays(arr, left, left+step, right, right+step);
+            left=right+step;
+            right=left+step;
+        }
+        if(right<arr.length) {
+            mergeArrays(arr, left, left+step, right, arr.length);
+        }
+        step*=2;
+    }
+}
 
+function mergeArrays(arr, startLeft, stopLeft, startRight, stopRight) {
+   var rightArr = new Array(stopRight - startRight + 1);
+   var leftArr = new Array(stopLeft - startLeft + 1);
+    var k,i, j, m, n;
+    k=startRight;
+    for(i=0;i<rightArr.length-1; i++) {
+        rightArr[i]=arr[k];
+        k++;
+    }
+    k=startLeft;
+    for(i=0;i<leftArr.length-1; i++) {
+        leftArr[i]=arr[k];
+        k++;
+    }
+    rightArr[rightArr.length-1]=leftArr[leftArr.length-1]=Infinity;
+    m=n=0;
+    for(k=startLeft; k<stopRight; k++) {
+        if(leftArr[m]<rightArr[n]) {
+            arr[k]=leftArr[m];
+            m++;
+        }else {
+            arr[k]=rightArr[n];
+            n++;
+        }
+    }
+}

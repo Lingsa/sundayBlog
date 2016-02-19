@@ -2,11 +2,11 @@
 layout: post
 title: "《算法导论》第二章---合并排序"
 date: 2016-02-17 13:34:55 
-info: 用JavaScript 实现 合并排序（分治法）
+info: 用JavaScript 实现 合并(归并)排序（分治法）
 categories: articles
 ---
 
-用JavaScript 实现依据分之法则的合并排序算法
+合并排序又称为归并排序，是高级算法之一。在《算法导论》这本书中此排序算法使用了递归地方式，code如下：
 
 {% highlight javascript %}
 
@@ -29,6 +29,9 @@ function merge(arr, p, q, r) {
 
 {% highlight javascript %}
 function mergeSort(arr, p, r) {
+    if(arr.length<2) {
+        return;
+    }
     if(p<r) {
         var q=Math.floor((p+r)/2);
         if(q>p) {
@@ -39,6 +42,76 @@ function mergeSort(arr, p, r) {
     }
 }
 
+{% endhighlight %}
+
+不过在《Data Structrue & Algorithms width Javascript》书中，作者指出递归式太深不适合javascript，他提出了另外一种策略。code如下：
+
+{% highlight javascript %}
+function mergeSort1(arr) {
+    if(arr.length<2) {
+        return;
+    }
+    var step=1;
+    var left,right;
+    while(step<arr.length) {
+        left=0;
+        right=step;
+        while(right+step<=arr.length) {
+            mergeArrays(arr, left, left+step, right, right+step);
+            left=right+step;
+            right=left+step;
+        }
+        if(right<arr.length) {
+            mergeArrays(arr, left, left+step, right, arr.length);
+        }
+        step*=2;
+    }
+}
+
+function mergeArrays(arr, startLeft, stopLeft, startRight, stopRight) {
+   var rightArr = new Array(stopRight - startRight + 1);
+   var leftArr = new Array(stopLeft - startLeft + 1);
+    var k,i, j, m, n;
+    k=startRight;
+    for(i=0;i<rightArr.length-1; i++) {
+        rightArr[i]=arr[k];
+        k++;
+    }
+    k=startLeft;
+    for(i=0;i<leftArr.length-1; i++) {
+        leftArr[i]=arr[k];
+        k++;
+    }
+    rightArr[rightArr.length-1]=leftArr[leftArr.length-1]=Infinity;
+    m=n=0;
+    for(k=startLeft; k<stopRight; k++) {
+        if(leftArr[m]<rightArr[n]) {
+            arr[k]=leftArr[m];
+            m++;
+        }else {
+            arr[k]=rightArr[n];
+            n++;
+        }
+    }
+}
+
+{% endhighlight %}
+
+关于它们在执行时间上的差异，可以用以下的计时code了解下，在此次案例下可以看到迭代式合并排序算法`mergeSort1`略胜递归式排序算法`mergeSort`
+
+{% highlight javascript %}
+var testArr=[];
+setDate(testArr,100000);
+var time1=Date.now();
+mergeSort1(testArr );
+var time2=Date.now();
+alert("迭代式归并排序消耗时间为："+(time2-time1)+'ms');
+testArr.length=0;
+setDate(testArr,100000);
+time1=Date.now();
+mergeSort(testArr);
+time2=Date.now();
+alert("递归式归并排序消耗时间为："+(time2-time1)+'ms');
 {% endhighlight %}
 
 贴 可调试地址：<a href="https://jsfiddle.net/37mgo212/" target="_blank">https://jsfiddle.net/37mgo212/</a>
