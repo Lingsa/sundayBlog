@@ -57,30 +57,6 @@ function horner(arr, x) {
 }
 
 //快速排序
-function quickSort(arr) {
-  if(arr.length<2) return arr;
-  var i,j, key, temVal;
-  i=0;j=arr.length-1;
-  key=arr[0];
-  while(j>i) {
-     if(arr[j]<key) {
-       temVal=arr[i]
-       arr[i]=arr[j]
-       arr[j]=temVal;
-       i++;
-     }
-     j--;
-     
-     if(arr[i]>key && j>i) {
-        temVal=arr[j];
-        arr[i]=arr[j];
-        arr[j]=temVal;
-        j--;
-     }
-     i++;
-  }
-  return arr;
-}
 var testArr=[6,2,7,3,8,9];
 
 function quickSort(array) {
@@ -110,4 +86,39 @@ function quickSort(array) {
   }
   sort(0, array.length);
   return array;
+}
+
+//选择排序
+//原理：选择排序会用到嵌套循环。外循环从数组的第一个元素移动到倒数第二个元素；内循环从第二个元素移动到最后一个元素，
+//查找比当前外循环所指向的元素小的元素。
+
+//数组元素置换函数
+function swap(arr,index1,index2) {
+    var tem=arr[index1];
+    arr[index1]=arr[index2];
+    arr[index2]=tem;
+}
+
+function selectSort(arr) {
+    var min, i, j;
+    for(i=0; i<arr.length-1; i++ ) {
+        min=i;
+        for(j=i+1; j<arr.length;j++) {
+            if(arr[j]<arr[min]) {
+                min=j;
+            }            
+        }
+        swap(arr, i, min);
+    }
+}
+
+//selectSort 简化的一种表示
+function selectSortT(arr) {
+    var i,min, temArr;
+    for(i=0;i<arr.length-1;i++) {        
+        temArr=arr.slice(i);
+        min=arr.indexOf(Math.min.apply(null,temArr ));
+        swap(arr, i,min)
+    }
+    return arr;
 }
