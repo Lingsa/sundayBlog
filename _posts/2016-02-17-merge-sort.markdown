@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "《算法导论》第二章---合并排序"
+title: "《算法导论》第二章---合并排序算法"
 date: 2016-02-17 13:34:55 
-info: 用JavaScript 实现 合并(归并)排序（分治法）
+info: 用JavaScript 实现 合并(归并)排序（分治法）。合并排序又称为归并排序，是高级算法之一。在《算法导论》这本书中此排序算法使用了递归地方式
 categories: articles
 ---
 
