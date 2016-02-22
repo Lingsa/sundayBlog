@@ -109,36 +109,24 @@ var time2=Date.now();
 console.log(time2-time1);
 
 /*=============高级算法===============*/
-//快速排序  [在排列的数组长度达到40时，运行时间高达3000多毫秒]
-var testArr=[6,2,7,3,8,9];
+//快速排序：通过递归地方式将数据依次分解为包含较小元素和较大元素的不同子序列。不断重复这个步骤直到所有数据都是有序的。  [在排列的数组长度达到40时，运行时间高达3000多毫秒]
 
-function quickSort(array) {
-  function sort(prev, numsize) {
-    var nonius = prev;
-    var j = numsize - 1;
-    var flag = array[prev];
-    if ((numsize - prev) > 1) {
-      while (nonius < j) {
-        for (; nonius < j; j--) {
-          if (array[j] < flag) {
-            array[nonius++] = array[j];　 //a[i] = a[j]; i += 1;
-            break;
-          };
-        }
-        for (; nonius < j; nonius++) {
-          if (array[nonius] > flag) {
-            array[j--] = array[nonius];
-            break;
-          }
-        }
-      }
-      array[nonius] = flag;
-      sort(0, nonius);
-      sort(nonius + 1, numsize);
+function qSort(list) {
+    if(list.length<2) {
+        return [];
     }
-  }
-  sort(0, array.length);
-  return array;
+    var lesser,greater,pivot, i;
+    lesser=[];
+    greater=[];
+    pivot=list[0];
+    for(i=1;i<list.length; i++) {
+        if(list[i]<pivot) {
+            lesser.push(list[i]);
+        }else {
+            greater.push(list[i]);
+        }
+    }
+    return qSort(lesser).concat(pivot,qSort(greater));
 }
 
 /*希尔排序
