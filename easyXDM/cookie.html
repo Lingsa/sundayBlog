@@ -10,11 +10,11 @@
         var rpc = new easyXDM.Rpc({},
             {
                 local:{
-                    testCanWriteCookies:testCanWriteCookies
+                    testCanWriteCookie:testCanWriteCookie
                 }
         });
 
-        function testCanWriteCookies() {
+        function testCanWriteCookie() {
             document.cookie='test=1';
             var allCookies=document.cookie.replace(' ','');
             allCookies=allCookies.split(';');
