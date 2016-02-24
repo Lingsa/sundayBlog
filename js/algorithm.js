@@ -1,33 +1,3 @@
-//二分查找(折半查找)算法
-function binarySearch(arr, v, p, r) {
-    if((p<r && v>arr[r] || v<arr[p]) || p>r) {
-        return undefined;
-    }
-
-    var j=Math.floor((r+p)/2);
-    if(v===arr[j]) {
-        return j;
-    } else {
-        if(v<arr[j]) {
-            return binarySearch(arr, v, p, j);
-        } else {
-            return binarySearch(arr, v, j+1, r);
-        }
-    }    
-}
-
-//2.3-7 （page.37）输入有n个整数构成的集合S和一个整数x，判断出S中是否存在有两个数其和等于x的元素。
-function checkSums(arr, x) {
-    arr=arr.sort();
-    var n=arr.length, i, temArr;
-    for(i=0;i<n;i++) {
-        temArr=arr.slice(0,i).concat(arr.slice(i+1,n));
-        if(arr[i]>=0 && binarySearch(temArr, x-arr[i], 0, temArr.length-1)) {
-            return true;
-        }
-    }
-    return false;
-}
 
 //插入排序用到外、内两个循环。外循环从数组的第2位到最后一位挨个移动，内循环则对外循环选中的元素与它的数组元素一一比较，
 //如果外循环选中的元素比内循环选中的元素小，那么内循环数组元素会向右移动，为外循环选中的这个元素腾位
@@ -108,7 +78,7 @@ insertSort(testArr);
 var time2=Date.now();
 console.log(time2-time1);
 
-/*=============高级算法===============*/
+/*=============高级排序算法===============*/
 //快速排序：通过递归地方式将数据依次分解为包含较小元素和较大元素的不同子序列。不断重复这个步骤直到所有数据都是有序的。  [在排列的数组长度达到40时，运行时间高达3000多毫秒]
 
 function qSort(list) {
@@ -232,3 +202,191 @@ function mergeArrays(arr, startLeft, stopLeft, startRight, stopRight) {
         }
     }
 }
+
+/*=============检索算法===============*/
+//二分查找(折半查找)算法，相对于顺序查找它的效率更高，但是你必须在查找前花费额外的时间将列表中的元素排序
+function binarySearch(arr, v, p, r) {
+    if((p<r && v>arr[r] || v<arr[p]) || p>r) {
+        return undefined;
+    }
+
+    var j=Math.floor((r+p)/2);
+    if(v===arr[j]) {
+        return j;
+    } else {
+        if(v<arr[j]) {
+            return binarySearch(arr, v, p, j);
+        } else {
+            return binarySearch(arr, v, j+1, r);
+        }
+    }    
+}
+
+//没有用到递归地二分查找
+function binarySearch1(arr,data) {
+    var upperBound=arr.length-1;
+    var lowerBound=0;
+    while(lowerBound<=upperBound) {
+        var mid=Math.floor((upperBound+lowerBound)/2);
+        if(arr[mid]<data) {
+            lowerBound=mid+1;
+        }else if(arr[mid]>data) {
+            upperBound=mid-1;
+        }else {
+            return mid;
+        }
+    }
+    return -1;
+}
+
+//2.3-7 （算法导论page.37）输入有n个整数构成的集合S和一个整数x，判断出S中是否存在有两个数其和等于x的元素。
+function checkSums(arr, x) {
+    arr=arr.sort();
+    var n=arr.length, i, temArr;
+    for(i=0;i<n;i++) {
+        temArr=arr.slice(0,i).concat(arr.slice(i+1,n));
+        if(arr[i]>=0 && binarySearch(temArr, x-arr[i], 0, temArr.length-1)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+//顺序查找
+function seqSearch(arr, x) {
+    if(arr.length<1) {
+        return;
+    }
+    for(var i=i;i<arr.length; i++) {
+        if(arr[i]===x) {
+            return true; //return i;
+        }
+    }
+    return false; //return -1;
+}
+
+//查找最小值、最大值
+function max(x,y) {
+    return x>y ? x:y;
+}
+function searchMax(arr) {
+    if(arr.length<1) {
+        return;
+    }
+    var temp=arr[0];
+    for(var i=1;i<arr.length;i++) {
+        temp=max(temp, arr[i]);
+    }
+    return temp;
+}
+
+//帕累托分布（类似“80-20”的概率分布）
+function seqSearch(arr,data) {
+    for(var i=0;i<arr.length; i++) {
+        if(arr[i]===data) {
+            if(i>0) {
+                swap(arr, i,i-1);
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+
+/*=============高级算法===============*/
+/*动态规划 
+ *解决方案：从底部开始解决问题，将所有小问题解决掉，然后合并成一个整体解决方案，从而解决掉整个大问题。
+ *很多使用递归去解决的编程问题，可以重写为使用动态规划的技巧去解决。
+*/
+function recurFib(n) {
+    if(n<2) {
+        return n;
+    }else {
+        return recurFib(n-1)+recurFib(n-2);
+    }
+}
+
+function iterFib(n) {
+    var i,
+        last=1,
+        nextlast=1,
+        result=1;
+    for(i=2;i<n;i++) {
+        result=last+nextlast;
+        last=nextlast;
+        nextlast=result;
+    }
+    return result;
+}
+
+var time1=Date.now();
+recurFib(100);
+var time2=Date.now();
+console.log(time2-time1);
+
+time1=Date.now();
+iterFib(100);
+time2=Date.now();
+console.log(time2-time1);
+
+/*贪心算法
+ *它是一种以寻找“优质解”为手段从而达到整体解决方案，也称全局最优解。
+*/
+
+//63美分的找零问题
+function makechange(origAmt, coins) {
+    var remainAmt=0;
+    if(origAmt % .25 >0) {
+        coins[0]=parseInt(origAmt / .25);
+        remainAmt=origAmt % .25;
+        origAmt=remainAmt;
+    }
+    if(origAmt % .1<origAmt) {
+        coins[1]=parseInt(origAmt / .1);
+        remainAmt=origAmt % .1;
+        origAmt=remainAmt;        
+    }
+    if(origAmt % .05<origAmt) {
+        coins[2]=parseInt(origAmt / .05);
+        remainAmt=origAmt % .05;
+        origAmt=remainAmt;        
+    } 
+    coins[3]=parseInt(origAmt / .01);
+    return coins;
+}
+
+//背包最优解问题
+function knapsack(values, weights, capacity) {
+    var load=0,
+        i=0,
+        w=0;
+    while(load<=capacity && i<values.length) {
+        if(weights[i]<(capacity-load)) {
+            load+=weights[i];
+            w+=values[i];
+        }else {
+            var r=(capacity-load)/weights[i];
+            w+=r*values[i];
+            load+=r*weights[i]; //原文：load+=weights[i]
+        }
+        i++;
+    }
+    return w;
+}
+
+function lcs(word1,word2) {
+    var i,j=word2.length-1;
+
+    for(i=0;i<word1.length; i++) {
+        var temp=word1.slice(i,i+1);
+        while(j--){
+            if(temp==word2.slice(j,j+1) && word1.slice(i+1,i+2)==word2.slice(j+1,j+2)) {//&& word1[i+1]==word2[j+1]
+                return temp+word1.slice(i+1,i+2);
+            }
+        }       
+    }
+    return -1;
+}
+
+lcs('raven','havoc');
