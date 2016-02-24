@@ -8,13 +8,14 @@
             window.parent.postMessage({hello:'world'}, "http://127.0.0.1/thirdPart/postMessage.html");
         }
     </script> -->
+    <script src="easyXDM.min.js"></script>
 </head>
 <body onload="">
     <script>
         var socket = new easyXDM.Socket({
             onMessage: function(message, origin) {
                 if (message == "open") {
-                    alert("Received '" + message + "' form '" + origin + "'");
+                    alert("Provider received '" + message + "' form '" + origin + "'");
                 }
                 socket.postMessage("Today is " + new Date().toGMTString());
             }
