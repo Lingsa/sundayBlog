@@ -1,0 +1,50 @@
+---
+layout: post
+title: "The Prototype Pattern"
+date: 2016-03-18 18:20:38
+info: 
+categories: articles
+---
+
+##The Prototype Pattern
+
+The prototype pattern as based on prototypal inheritance where we create objects which act as prototypes for other objectrs.
+
+>=使用`Object.create`创建的原型继承
+ {% highlight javascript %}
+ 
+ var myCar = {
+ 
+  name: "Ford Escort",
+ 
+  drive: function () {
+    console.log( "Weeee. I'm driving!" );
+  },
+ 
+  panic: function () {
+    console.log( "Wait. How do you stop this thing?" );
+  }
+ 
+};
+ 
+// Use Object.create to instantiate a new car
+var yourCar = Object.create( myCar );
+
+{% endhighlight %}
+
+>=另一种实现原型继承的实现方式
+
+{% highlight javascript%}
+var beget = (function () {
+ 
+    function F() {}
+ 
+    return function ( proto ) {
+        F.prototype = proto;
+        return new F();
+    };
+})();
+
+//Use beget to instantiate a new car
+var newCar=new beget(myCar);
+{% endhighlight %}
