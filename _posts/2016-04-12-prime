@@ -1,0 +1,29 @@
+###求区间质数
+
+function primeNumbers(m,n){
+  if(n<2 || m<2) return ;
+  var i, primes=[];
+  if(m>n){
+    var temp =n;
+    n = m;
+    m = temp;
+  }
+  for(i=m; i<=n; i++){
+    var tempNumber = i;
+    var boo = (function(temp){
+      //
+      for(var j = 2; j<temp; j++){
+        if(temp % j ===0){
+          //break;
+          return undefined;
+        }
+      }
+      return temp;
+    })(tempNumber);
+    if(boo){
+      primes.push(tempNumber);
+    }
+  }
+  return primes;
+}
+
