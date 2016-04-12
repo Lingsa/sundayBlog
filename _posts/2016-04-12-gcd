@@ -1,0 +1,18 @@
+###辗转相除法
+function gcd(a, b){
+  if(a<b){
+    var temp = a;
+    a = b;
+    b = temp;
+  }
+  var r0,
+      r = a % b;
+  while( r){
+    if(r !==0){
+      r0 = b % r;
+      b = r;
+      r = r0;
+    }     
+  }
+  return b;
+}
