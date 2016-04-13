@@ -7,11 +7,15 @@
 </head>
 <body onload="">
     <script>
-        var rpc = new easyXDM.Rpc({},
-            {
-                local:{
-                    testCanWriteCookie:testCanWriteCookie
-                }
+        var rpc = new easyXDM.Rpc({
+            onReady:function() {
+                console.log("document.cookie:"+document.cookie);
+            } 
+        },
+        {
+            local:{
+                testCanWriteCookie:testCanWriteCookie
+            }
         });
 
         function testCanWriteCookie() {

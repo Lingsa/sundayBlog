@@ -1,0 +1,104 @@
+继承的有利于减少重复性代码，但会让一个类强耦合与它继承的类.对象具有到自己的原型对象的反向继承。Javascript中的类式继承仅仅是对真正基于类的继承的一种模仿
+类式继承使用场景：提供一个供众人使用的API，或者可能会有不熟悉原型式继承的其他程序员基于你的代码进行设计。
+原型式继承优点：更节约内存
+原型式继承的工作机制：在Javascript中，每个对象都有一个指向它的原型对象的内部链接。这个原型对象又有自己的原型，直到某个对象的原型为null为止（也就是不再有可以指向的原型），这种一级一级的链结构就称为原型链（prototype chain）。
+
+##类式继承
+
+//
+function extend(subClass, superClass){
+  var F = function(){};
+  F.prototype = superClass.prototype;
+  subClass.prototype = new F();
+  subClass.prototype.constructor = subClass;
+
+  //确保超类superClass 的prototype.constructor属性已被正确设置
+  subClass.superclass = superClass.prototype;
+  if(superClass.prototype.constructor == Object.prototype.constructor){
+    superClass.prototype.constructor = superClass;
+  }
+
+}
+
+//原类Person
+function Person(name){
+  this.name = name;
+}
+Person.prototype.getName = function(){
+  return this.name;
+}
+
+//继承类Author
+function Author(name, books){
+  //Person.call(this, name);
+  Author.superclass.constructor.call(this, name);
+  this.books = books;
+}
+extend(Author, Person);
+
+Author.prototype.getBooks = function(){
+  return this.books;
+}
+
+//原型式继承  使用原型式继承来重新设计Person 和Author
+//创建一个对象，这个对象随后被新的对象重用，该对象被称为原型对象（prototype object）
+
+/*
+ * 原型对象
+*/
+var Person = {
+  name: 'default name',
+  getName: function(){
+    return this.name;
+  }
+}
+
+/*
+ *Author Prototype Object
+*/
+var Author = clone(Person);
+Author.books = [];
+Author.getBooks = function(){
+  return this.books;
+}
+
+//Author 的使用
+var newAuthor = Object.create(Author); 
+//重写属性和方法,否则Author和所有继承了它的对象的属性和方法值 都会随newAuthor的属性和方法值改变而改变
+newAuthor.name='';
+newAuthor.books=[];
+newAuthor.books.push('');
+
+//Clone function
+function clone(object){
+  function F(){};
+  F.prototype = object;
+  return new F;
+}
+
+/*
+ *另一种克隆的写法
+*/
+function creat(){
+  function Fn(){};
+  return function(object){
+    Fn.prototype = object;
+    return new Fn;
+  }
+}();
+
+
+掺元类
+没有严格的继承。它们通常不会被实例化或直接调用。其存在的目的只是向其他类提供自己的方法。
+
+/* Mixin class (掺元类)*/
+var Mixin = function(){};
+Mixin.prototype = {
+  serialize: function(){
+    var output = [];
+    for(var key in this){
+      output.push(key + ':' + this[key]);
+    }
+    return output.join(',');
+  }
+};

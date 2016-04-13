@@ -1,0 +1,120 @@
+封装和信息隐藏
+
+信息隐藏原则有助于减轻系统中两个参与者之间的依赖性，它指出，两个参与者必须通过明确的通道传送信息。在本章中，这些通道就是对象间的接口。
+
+封装（encapsulation)可以定义为对对象的内部数据表现形式和实现细节进行隐藏。要想访问封装过的对象中的数据，只有使用已定义的操作这一种办法。
+
+接口在封装中扮演的角色
+接口提供了一份记载着可供公众访问的方法契约。
+
+Javascript中创建对象的基本模式的3中方式
+
+* 门户大开型（fully exposed，只提供公用成员）  --最简单的一种
+* 对上面的改进，使用下划线来表示方法或属性的私用性
+* 使用闭包来创建真正私用成员，这些成员只能通过一些特权方法访问。
+
+以Book类为例。任务：创建一个用来存储关于一本书的数据的类
+
+门户大开型创建此对象
+
+//定义对外的接口, 其他程序员只能使用在这个接口中定义的方法与对象打交道
+var Publication = new Interface('Publication', ['getIsbn', 'setIsbn', 'getTitle', 'setTitle', 'getAuthor', 'setAuthor', 'display']);
+
+/*
+function BookFormatter(bookObject){
+  Interface.ensureImplements(bookObject, Publication);
+  bookObject.getIsbn();
+  bookObject.getTitle();
+};
+*/
+
+var Book = function(isbn, title, author){
+  //
+  this.setIsbn(isbn);
+  this.setTitle(title);
+  this.setAuthor(author);
+}
+Book.prototype = {
+  _checkIsbn: function(isbn){
+    //...  
+  },
+  getIsbn: function(){
+    return this._isbn;
+  },
+  setIsbn: function(isbn){
+    if(this.checkIsbn(isbn)) throw new Error('Book: Invalid ISBN');
+    this._isbn = isbn;
+  },
+  getTitle: function(){
+    return this._title;
+  },
+  setTitle: function(title){
+    this._title = title || 'No title specified';
+  },
+  getAuthor: function(){
+    return this._author;
+  },
+  setAuthor: function(author){
+    this._author = author || 'No author specified';
+  },
+  display: function(){
+    //..
+  }
+};
+
+//var newBook = new Book('0-395-07122-4', 'The Hobbit', 'J.R.R.Tolkien');
+
+注：它存在这样的一个漏洞，虽然我们为设置属性提供了赋值器方法，但那些属性仍然是公开的，可以被直接设置。
+
+为了区别私有属性，我们在上面的属性前加上了符号 "_",比如_title、 _author
+
+##用作用域、嵌套函数和闭包对Book进行 改进
+var Book = function(newIsbn, newAuthor, newTitle){
+  
+  //私有属性
+  var isbn, title, author;
+
+  //私有方法
+  function checkIsbn(isbn){
+    //...
+  }
+
+  //特权的方法
+  this.getIsbn = function() {
+    return isbn;
+  };
+  this.setIsbn = function(newIsbn){
+    //if(!checkIsbn(newIsbn)) throw new Error('Book: Invalid ISBN.');
+    isbn = newIsbn;
+  };
+  this.getTitle = function(){
+    return title;
+  };
+  this.setTitle = function(newTitle){
+    title = newTitle || 'No title specified';
+  };
+  this.getAuthor = function(){
+    return author;
+  };
+  this.setAuthor = function(newAuthor){
+    author = newAuthor || 'No author specified.';
+  };
+
+  //结构化代码
+  this.setIsbn(newIsbn);
+  this.setTitle(newTitle);
+  this.setAuthor(newAuthor);
+};
+
+//公共的、没有特权的方法
+Book.prototype.display = function() {
+  //...
+};
+
+封装之利
+封装通过将数据的访问途径限制为取值器和赋值器这两个方法，可以获得对取值和赋值的完全控制。这可以减少其他函数所需的错误检查代码的数量，并确保数据不会处于无效状态。
+
+封装之弊
+私用方法很难进行单元测试。因为它们及其内部变量都是私有的，所以对象外部无法访问到它们。
+
+

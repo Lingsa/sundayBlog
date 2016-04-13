@@ -10,6 +10,7 @@ categories: articles
 
 In JavaScript, Singletons serve as a shared resource namespace which isolate implementation code from the global namespace so as to provide a single point of access for functions.
 
+
 {% highlight javascript %}
 
 'var mySingleton = (function () {

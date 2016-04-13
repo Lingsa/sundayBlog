@@ -1,0 +1,131 @@
+
+
+懂得应该在什么场合使用这些设计模式，以及如何实现它们。
+
+第一章：富有表现力的Javascript
+
+基于类的实现：
+
+Function.prototype.method = function(name, fn) {
+  this.prototype[name] = fn;
+};
+
+/*
+ *Anim class, with methods created using a convenience method.
+*/
+
+var Anim = function() {
+  //...
+};
+Anim.method('start' , function() {
+  //...
+});
+Anim.method('stop' , function() {
+  //...
+});
+
+进一步修改Function.prototype.method，使其可被链式调用。
+
+Function.prototype.method = function(name , fn) {
+  this.prototype[name] = fn;
+  return this;
+}
+
+var Anim = function() {
+  //...
+};
+Anim.method('start' , function() {
+  //...
+});
+Anim.method('stop' , function() {
+  //...
+});
+
+Javascript 时弱类型语言。函数是一等对象，并且可以动态创建。所有对象和类都是易变的，可以在运行时修改。可供使用的继承范型有两种，即原型式和类式继承。 使用的编程风格和选择的设计模式应该与所要完成的具体工作相称。
+
+
+第二章： 接口
+
+可重用面向对象设计第一条原则： 针对接口而不是实现编程。
+
+接口提供了一种用以说明一个对象应该具有哪些方法的手段。接口具有自我描述性，并能促进代码的重用。
+
+Javascript中任何实现接口的方法都会对性能造成一些影响，这在某种程度上归咎于额外的方法调用的开销。
+
+用鸭式辨型模仿接口
+
+它的简单观点：如果对象具有与接口定义的方法同名的所有方法，那么就可以认为它实现了这个接口。
+
+本章采用的接口实现方法综合了注释描述接口和鸭式辨型模仿接口，从而提高代码的可重用性及其文档的完善性。使用辅助类Interface 和它的类方法Interface.ensureImplements 来对对象实现的方法进行显式检查。
+
+下面是一个结合使用Interface 类与注释的示例：
+var Composite = new Interface('Composite,', ['add', 'remove', 'getChild']);
+var FormItem = new Interface('FormItem', ['save']);
+
+//CompositeForm class
+var CompositeForm = function(id, method, action){
+  //implements Composite, FormItem
+};
+
+function addForm(formInstance) {
+  Interface.ensureImplements(formInstance, Composite, FormItem);
+}
+
+Interface 类的实现
+var Interface = function(name, methods){
+  if(arguments.length !=2){
+    throw new Error("Interface constructor called with " + arguments.length +" arguments, but expected exactly 2");
+  }
+
+  this.name=name;
+  this.methods=[];
+  for(var i=0,len=methods.length; i<len; i++){
+    if(typeof methods[i] !=='string'){
+      throw new Error("Interface construtor expects method names to be" + "passed in as a string");
+    }
+    this.methods.push(methods[i]);
+  }
+};
+
+Interface.ensureImplements = function(object){
+  if(arguments.length <2){
+    throw new Error("Function Interface.ensureImplements called with" + arguments.length + "arguments, but expected at least 2.");
+  }
+
+  for(var i=1, len=arguments.length; i<len; i++){
+    var interface = arguments[i];
+    if(interface.constructor !== Interface){
+      throw new Error("Function Interface.ensureImplements expects arguments" + "two and above to be instances of Interface");
+    }
+    for(var j=0, methodslen=interface.methods.length; j< methodslen; j++) {
+      var method = interface.methods[j];
+      if(!object[method] || typeof object[method] !=='function'){
+        throw new Error("Function Interface.ensureImplements: object does not implements the" + interface.name +
+        "interface.Method" + method +"was not found.");
+      }
+
+    }
+  }
+}
+
+
+Interface的使用场合
+
+接口在运用设计模式实现复杂系统的时候最能体现其价值。它看似降低了Javascript的灵活性，而实际上，因为使用接口可以降低对象间的耦合程度，所以它提高了代码的灵活性。
+
+Interface类的使用场合
+
+判断在代码中使用接口是否划算是最重要的一步。可以参照如下使用说明：
+
+* 强Interface类纳入HTML文件。可以在http://jsdesignpatterns.com上下载
+* 逐一检查代码中所有以对象为参数的方法。搞清楚代码的正常运转要求这些对象参数具有哪些方法。
+* 为你需要的每一个不同的方法集创建一个Interface类。
+* 剔除所有针对构造器的显式检查。因为我们使用的是鸭式辨型，所以对象的类型不再重要。
+* 以Interface。ensureImplements取代原来的构造器检查。
+
+依赖于接口的设计模式
+
+* 工程模式
+* 组合模式
+* 装饰者模式
+* 命令模式
